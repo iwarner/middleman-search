@@ -33,7 +33,7 @@ module Middleman
       def build_index
         # Build js context
         context = V8::Context.new
-        context.load(lunr_resource('lunr/lunr.min.js'))
+        context.load(lunr_resource('lunr/lunr.js'))
 
         if @language != 'en' # English is the default
           context.load(lunr_resource("lunr_languages/lunr.stemmer.support.min.js"))
