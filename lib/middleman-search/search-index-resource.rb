@@ -48,7 +48,8 @@ module Middleman
           :ru, :sv, :tr
         ]
 
-        if @language != 'en' || langs.include?(@language)
+        if @language != 'en' && langs.include?(@language)
+          puts 'true'
           context.load(lunr_resource("lunr_languages/lunr.stemmer.support.min.js"))
           context.load(lunr_resource("lunr_languages/lunr.#{@language}.min.js"))
           lunr_lang = context.eval("lunr.#{@language}")
@@ -80,7 +81,7 @@ module Middleman
           end
 
           # Use language
-          this.use(lunr_lang) if @language != 'en' || langs.include?(@language)
+          this.use(lunr_lang) if @language != 'en' && langs.include?(@language)
 
           # Define fields with boost
           @fields.each do |field, opts|
