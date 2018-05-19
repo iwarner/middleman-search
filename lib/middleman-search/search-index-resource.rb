@@ -35,7 +35,20 @@ module Middleman
         context = V8::Context.new
         context.load(lunr_resource('lunr/lunr.js'))
 
-        if @language != 'en' # English is the default
+        if @language === :nl
+          @language = :du
+        end
+
+        # English is the default
+        # Arabic Danish, German, Dutch, Spanish, Finish, French, Hungarian, Italian,
+        # Japanese, Norwegian, Portuguese, Romanian, Russian, Swedish, Turkish
+        # Added Arabic
+        langs = [
+          :ar, :da, :de, :du, :es, :fi, :fr, :hu, :it, :ja, :jp :no, :pt, :ro,
+          :ru, :sv, :tr
+        ]
+
+        if @language != 'en' || langs.include?(@language)
           context.load(lunr_resource("lunr_languages/lunr.stemmer.support.min.js"))
           context.load(lunr_resource("lunr_languages/lunr.#{@language}.min.js"))
           lunr_lang = context.eval("lunr.#{@language}")
@@ -66,8 +79,10 @@ module Middleman
             this.pipeline.add(context[name])
           end
 
+          # Use language
+          this.use(lunr_lang) if @language != 'en' || langs.include?(@language)
+
           # Define fields with boost
-          this.use(lunr_lang) if @language != 'en'
           @fields.each do |field, opts|
             next if opts[:index] == false
             this.field(field, {:boost => opts[:boost]})
