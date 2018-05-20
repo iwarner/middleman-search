@@ -39,6 +39,10 @@ module Middleman
           @language = :du
         end
 
+        # if @language === :zh
+        #   @language = :ja
+        # end
+
         # English is the default
         # Arabic Danish, German, Dutch, Spanish, Finish, French, Hungarian, Italian,
         # Japanese, Norwegian, Portuguese, Romanian, Russian, Swedish, Turkish
@@ -48,10 +52,21 @@ module Middleman
           :ru, :sv, :tr
         ]
 
+        # Try this resource, its a chinese tokenizer using CC-CEDICT
+        # https://github.com/yishn/chinese-tokenizer
+        # https://github.com/MihaiValentin/lunr-languages/blob/master/lunr.ja.js
+        # http://linfuyan.com/add-chinese-support-to-lunrjs/
+        # https://www.ranks.nl/stopwords/chinese-stopwords
+        # https://github.com/Wiredcraft/lunr-chinese
+        # https://github.com/yanyiwu/nodejieba
+        # https://github.com/mamboer/lunr.js/blob/master/lib/tokenizer.js
+        # https://github.com/stkevintan/hugo-lunr-zh
+
         if @language != 'en' && langs.include?(@language)
           puts 'true'
-          context.load(lunr_resource("lunr_languages/lunr.stemmer.support.min.js"))
-          context.load(lunr_resource("lunr_languages/lunr.#{@language}.min.js"))
+          context.load(lunr_resource("lunr_languages/lunr.stemmer.support.js"))
+          # context.load(lunr_resource("lunr_languages/tinyseg.js"))
+          context.load(lunr_resource("lunr_languages/lunr.#{@language}.js"))
           lunr_lang = context.eval("lunr.#{@language}")
         end
 
