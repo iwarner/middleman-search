@@ -48,7 +48,7 @@ module Middleman
         # Japanese, Norwegian, Portuguese, Romanian, Russian, Swedish, Turkish
         # Added Arabic
         langs = [
-          :ar, :da, :de, :du, :es, :fi, :fr, :hu, :it, :ja, :jp, :no, :pt, :ro,
+          :da, :de, :du, :es, :fi, :fr, :hu, :it, :ja, :jp, :no, :pt, :ro,
           :ru, :sv, :tr
         ]
 
